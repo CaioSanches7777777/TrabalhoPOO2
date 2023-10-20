@@ -64,3 +64,44 @@ VScode Icons
 ```npx prisma migrate dev --name init```
 
 #
+
+```mermaid
+classDiagram
+class Professor {
+  - matrícula: String
+  - nome: String
+  - email: String
+  + calcNotaGrupo(): float
+}
+
+class Aluno {
+ - matrícula: String
+ - nome: String
+ - email: String
+}
+
+class Avaliador {
+    <<interface>>
+    + avaliarGrupo()
+}
+
+class Grupo {
+    - nome: String
+    - líder: Aluno
+    - membros: Aluno
+    - diaApresentação: Date
+    - estande: int
+}
+
+class Estande {
+    - número: int
+}
+
+Professor "1..N" ..|> "1" Avaliador 
+Aluno "1..N" ..|> "1" Avaliador
+Avaliador "0..N" -- "0..N" Grupo
+Aluno "1" -- "1" Grupo: Líder
+Aluno "1..4" --* "1" Grupo: Membros
+Grupo "0..3" -- "1" Estande
+
+```
