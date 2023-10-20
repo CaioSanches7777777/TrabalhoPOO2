@@ -10,6 +10,51 @@ por exemplo se ele receber 5 estandes, ele vai saber qual é a numeração de ca
 ## Diagrama
 ![Untitled](https://github.com/CaioSanches7777777/TrabalhoPOO2/assets/102961025/14482fad-9b67-488c-8ba4-18aa8142b724)
 
+```mermaid
+classDiagram
+
+class Professor{
+- id: String
+- email: String
+- nome: String
+}
+
+class Aluno{
+- id: String
+- email: String
+- nome: String
+- grupoId: String
+}
+
+class Grupo{
+- id: String
+- alunoLiderId: String
+}
+
+class Estande{
+- id: String
+- grupoId: String
+}
+
+class Avaliacao{
+- id: String
+- professorId: String
+- alunoId: String
+- estandeId: String
+- notaIdeia: Int
+- notaProjeto: Int
+- notaApresentacao: Int
+}
+
+Grupo "1" --> "1" Estande: apresentacao
+Professor "1..N" --> "1..N" Avaliacao: avaliador
+Aluno "1" --> "1" Grupo: lideranca
+Aluno "1*" *-- "1" Grupo: composicao
+Aluno "1..N" --> "1..N" Avaliacao: avaliador
+Estande "1" <-- "1" Avaliacao: avalia
+
+```
+
 
 # Para criar uma pasta em DevC
 
