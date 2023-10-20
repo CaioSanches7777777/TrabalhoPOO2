@@ -33,11 +33,11 @@ por exemplo se ele receber 5 estandes, ele vai saber qual é a numeração de ca
 
 ```npm init --help```  ou ```npm help init```
 
-# Instala a verção mais recente do TypeScript
+# Instala a versão mais recente do TypeScript
 
 ```npm install --save-dev typescript```
 
-# Inicialisar TypeScript
+# Inicializar TypeScript
 
 ```npx tsc --init```
 
@@ -45,7 +45,7 @@ por exemplo se ele receber 5 estandes, ele vai saber qual é a numeração de ca
 
 ```npm install```
 
-# Baixar extenções no VS Code
+# Baixa extensões no VS Code
 
 SQLite Viewer
 
