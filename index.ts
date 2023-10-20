@@ -111,7 +111,7 @@ async function main() {
   const Avaliacao5 = await prisma.avaliacao.create({
     data: {
       id: '5',
-      estandeId: '11',
+      estandeId: '10',
       notaApresentacao: 8,
       notaIdeia: 10,
       notaProjeto: 9
@@ -131,7 +131,7 @@ async function main() {
       id: '3'
     },
     data:{
-      alunoId: '5'
+      alunoLiderId: '5'
     }
   })
   const updatedGrupo2 = await prisma.grupo.update({
@@ -139,7 +139,7 @@ async function main() {
         id: '2'
       },
       data:{
-        alunoId: '4'
+        alunoLiderId: '4'
       }
   })
 
