@@ -10,10 +10,57 @@ por exemplo se ele receber 5 estandes, ele vai saber qual é a numeração de ca
 
 ## Diagrama
 ![Diagrama](https://github.com/CaioSanches7777777/TrabalhoPOO2/assets/102961025/58a80b2d-90b1-474d-beac-ac290bc38c96)
-## Passo a passo da configuração do ambiente
-### npx tsc --init Para inicializar o TS.
-### npm install prisma --save-dev Para instalar as dependencias do Prisma.
-### npx prisma init --datasource-provider sqlite Para configurar o SQL Lite como o banco de dados que será ultilizado.
-### npx prisma migrate dev --name init Migra as tabelas para o banco de dados.
-### npx ts-node index.ts Envia os dados para o Banco de Dados.
 
+# Para criar uma pasta em DevC
+
+```cd ../../../..```
+
+```ls```
+
+```cd DevC```
+
+```mkdir POOinova```
+
+```cd POOinova```
+
+```code .```
+
+# Criar um projeto no node (package.json)
+
+```npm init``` ou ```npm init -y```
+
+# Para ajuda com "npm init"
+
+```npm init --help```  ou ```npm help init```
+
+# Instala a verção mais recente do TypeScript
+
+```npm install --save-dev typescript```
+
+# Inicialisar TypeScript
+
+```npx tsc --init```
+
+# Reconstroi todas as dependências "node_modules"
+
+```npm install```
+
+# Baixar extenções no VS Code
+
+SQLite Viewer
+
+Prisma insider
+
+VScode Icons
+
+
+# Prisma
+```npm install typescript ts-node @types/node --save-dev```
+
+```npm install prisma --save-dev```
+
+```npx prisma init --datasource-provider sqlite```
+
+```npx prisma migrate dev --name init```
+
+#
