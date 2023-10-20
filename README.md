@@ -1,4 +1,4 @@
-## Arthur Daleprani e Caio Sanchez
+## Arthur Daleprani e Caio Sanches
 
 ## MiniMundo
 A Universidade de Vila Velha realiza em seu campus todo ano o InovaWeek, evento de inovação e tecnologia.
