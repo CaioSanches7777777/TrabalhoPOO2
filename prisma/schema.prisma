@@ -9,7 +9,80 @@ datasource db {
    provider = "sqlite"
    url      = env("DATABASE_URL")
 }
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
 
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+   provider = "sqlite"
+   url      = env("DATABASE_URL")
+}
+
+model Aluno {
+  id String @id @default(uuid())
+  email String @unique
+  nome String 
+  grupo Grupo? @relation("lideranca")
+  grupoAluno Grupo? @relation("composicao", fields: [grupoId], references: [id])
+  grupoId String?
+  avaliacao Avaliacao? @relation("avaliador")
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+}
+
+model Professor {
+  id String @id @default(uuid())
+  email String @unique
+  nome String
+  avaliacao Avaliacao[] @relation("avaliador")
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+}
+
+
+model Grupo {
+  id String @id @default(uuid())
+  aluno Aluno? @relation("lideranca", fields: [alunoId], references: [id])
+  alunoId String? @unique                                                   //Atualizar para incluir o id do aluno lider
+  estandeId String?
+  estande Estande? @relation("apresentacao")
+  alunos Aluno[] @relation("composicao")                                    //Atualizar para incluir o id dos alunos do grupo
+}
+
+model Estande {
+  id String @id @default(uuid())
+  grupo Grupo? @relation("apresentacao", fields: [grupoId], references: [id])
+  grupoId String? @unique
+
+  avaliacao Avaliacao[] @relation("avaliado")                              
+  
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+}
+
+
+
+model Avaliacao {
+  id String @id @default(uuid())
+  
+  professor Professor? @relation("avaliador", fields: [professorId], references: [id])  //Se professorId for nulo. Avaliação feita por um aluno
+  professorId String? 
+  aluno Aluno? @relation("avaliador", fields: [alunoId], references: [id])              //Se alunoId for nulo. Avaliação feita por um professor
+  alunoId String? @unique
+  
+  estande Estande? @relation("avaliado", fields: [estandeId], references: [id])
+  estandeId String? 
+
+  notaIdeia Int
+  notaProjeto Int
+  notaApresentacao Int
+  
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+}
 model Aluno {
   id String @id @default(uuid())
   email String @unique
