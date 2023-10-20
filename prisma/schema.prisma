@@ -9,28 +9,18 @@ datasource db {
    provider = "sqlite"
    url      = env("DATABASE_URL")
 }
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-generator client {
-  provider = "prisma-client-js"
-}
-
-datasource db {
-   provider = "sqlite"
-   url      = env("DATABASE_URL")
-}
 
 model Aluno {
   id String @id @default(uuid())
   email String @unique
   nome String 
   grupo Grupo? @relation("lideranca")
-  grupoAluno Grupo? @relation("composicao", fields: [grupoId], references: [id])
+  grupoAluno Grupo? @relation("composicao", fields: [grupoId], references: [id], onUpdate: Cascade, onDelete: Cascade)
   grupoId String?
-  avaliacao Avaliacao? @relation("avaliador")
+  avaliacao Avaliacao[] @relation("avaliador")
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
+  @@map("Aluno")
 }
 
 model Professor {
@@ -40,41 +30,48 @@ model Professor {
   avaliacao Avaliacao[] @relation("avaliador")
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
+
+  @@map("Professor")
 }
 
 
-model Grupo {
+model Grupo {                                                               
   id String @id @default(uuid())
-  aluno Aluno? @relation("lideranca", fields: [alunoId], references: [id])
-  alunoId String? @unique                                                   //Atualizar para incluir o id do aluno lider
+  aluno Aluno? @relation("lideranca", fields: [alunoLiderId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  alunoLiderId String? @unique                                                   //Atualizar para incluir o id do aluno lider
   estandeId String?
   estande Estande? @relation("apresentacao")
-  alunos Aluno[] @relation("composicao")                                    //Atualizar para incluir o id dos alunos do grupo
+  alunos Aluno[] @relation("composicao")
+
+  @@map("Grupo")
 }
 
 model Estande {
   id String @id @default(uuid())
-  grupo Grupo? @relation("apresentacao", fields: [grupoId], references: [id])
+  grupo Grupo? @relation("apresentacao", fields: [grupoId], references: [id], onUpdate: Cascade, onDelete: Cascade)
   grupoId String? @unique
 
-  avaliacao Avaliacao[] @relation("avaliado")                              
+  avaliacao Avaliacao[] @relation("avalia")                              
   
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
+  
+  @@map("Estande")
 }
 
 
 
-model Avaliacao {
+model Avaliacao {                                                                       //Tem que ser atualizado para informar quem avaliou
   id String @id @default(uuid())
   
-  professor Professor? @relation("avaliador", fields: [professorId], references: [id])  //Se professorId for nulo. Avaliação feita por um aluno
-  professorId String? 
-  aluno Aluno? @relation("avaliador", fields: [alunoId], references: [id])              //Se alunoId for nulo. Avaliação feita por um professor
-  alunoId String? @unique
+  professor Professor? @relation("avaliador", fields: [professorId], references: [id], onUpdate: Cascade, onDelete: Cascade)  //Se professorId for nulo. Avaliação feita por um aluno
+  professorId String?                                                                   
+
+  aluno Aluno? @relation("avaliador", fields: [alunoId], references: [id], onUpdate: Cascade, onDelete: Cascade)              //Se alunoId for nulo. Avaliação feita por um professor
+  alunoId String?                                                         
   
-  estande Estande? @relation("avaliado", fields: [estandeId], references: [id])
-  estandeId String? 
+  estande Estande? @relation("avalia", fields: [estandeId], references: [id], onUpdate: Cascade, onDelete: Cascade)         
+  estandeId String?                                                                    //Não pode ser @unique. Se não, um avaliador não pode avaliar um estande já avalido por outro avaliador
 
   notaIdeia Int
   notaProjeto Int
@@ -82,64 +79,9 @@ model Avaliacao {
   
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
-}
-model Aluno {
-  id String @id @default(uuid())
-  email String @unique
-  nome String 
-  grupo Grupo? @relation("lideranca")
-  grupoAluno Grupo? @relation("composicao", fields: [grupoId], references: [id])
-  grupoId String?
-  avaliacao Avaliacao? @relation("avaliador")
-  created_at DateTime @default(now())
-  updated_at DateTime @default(now())
-}
-
-model Professor {
-  id String @id @default(uuid())
-  email String @unique
-  nome String
-  avaliacao Avaliacao? @relation("avaliador")
-  created_at DateTime @default(now())
-  updated_at DateTime @default(now())
-}
-
-
-model Grupo {
-  id String @id @default(uuid())
-  aluno Aluno? @relation("lideranca", fields: [alunoId], references: [id])
-  alunoId String? @unique                                                   //Atualizar para incluir o id do aluno lider
-  estandeId String?
-  estande Estande? @relation("apresentacao")
-  alunos Aluno[] @relation("composicao")                                    //Atualizar para incluir o id dos alunos do grupo
-}
-
-model Estande {
-  id String @id @default(uuid())
-  grupo Grupo? @relation("apresentacao", fields: [grupoId], references: [id])
-  grupoId String? @unique
-
-  avaliacao Avaliacao[] @relation("avaliado")                               //Atualisar para incluir notas de Avaliação
   
-  created_at DateTime @default(now())
-  updated_at DateTime @default(now())
-}
 
-model Avaliacao {
-  id String @id @default(uuid())
-  
-  professor Professor? @relation("avaliador", fields: [professorId], references: [id])  //se professorId for nulo. Avaliação feita por um aluno
-  professorId String? @unique
-  aluno Aluno? @relation("avaliador", fields: [alunoId], references: [id])              //se alunoId for nulo. Avaliação feita por um professor
-  alunoId String? @unique
-  
-  estande Estande? @relation("avaliado", fields: [estandeId], references: [id])
-  estandeId String? @unique
-
-  notaIdeia Int
-  notaProjeto Int
-  notaApresentacao Int
-  
-  created_at DateTime @default(now())
-  updated_at DateTime @default(now())
+  @@unique([estandeId, professorId])
+  @@unique([estandeId, alunoId])
+  @@map("Avaliacao")
 }
