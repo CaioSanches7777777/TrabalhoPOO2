@@ -1,4 +1,4 @@
-interface Avaliador {
+class Professor implements Avaliador{
     id: string;
     email: string;
     nome: string;
