@@ -4,7 +4,8 @@ import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient();
 
 async function main() {
-  
+
+
   const Professor = await prisma.professor.create({
     data: {
       id: '4',
@@ -14,23 +15,22 @@ async function main() {
   });
 
 
-
-  const aluno = await prisma.aluno.create({
-      data: {
-        id: '5',
-        email: 'arthur@gmail.com',
-        nome: 'Arthur'
-      }
+  const Grupo = await prisma.grupo.create({
+    data: {
+      id: '3',
+      estandeId: '10'
+    }
   });
 
 
 
-  const Grupo = await prisma.grupo.create({
-    data: {
-      id: '3',
-      alunoId: '5',
-      estandeId: '10'
-    }
+  const Aluno = await prisma.aluno.create({
+      data: {
+        id: '5',
+        email: 'arthur@gmail.com',
+        nome: 'Arthur',
+        grupoId: '3'
+      }
   });
 
 
@@ -41,7 +41,6 @@ async function main() {
       grupoId: '3'
     }
   });
-
 
   const Avaliacao = await prisma.avaliacao.create({
     data: {
