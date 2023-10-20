@@ -17,6 +17,7 @@ model Aluno {
   grupo Grupo? @relation("lideranca")
   grupoAluno Grupo? @relation("composicao", fields: [grupoId], references: [id])
   grupoId String?
+  avaliacao Avaliacao? @relation("avaliador")
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
 }
@@ -25,7 +26,7 @@ model Professor {
   id String @id @default(uuid())
   email String @unique
   nome String
-  //avaliacao Avaliacao? @relation("avaliador")
+  avaliacao Avaliacao? @relation("avaliador")
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
 }
@@ -34,17 +35,18 @@ model Professor {
 model Grupo {
   id String @id @default(uuid())
   aluno Aluno? @relation("lideranca", fields: [alunoId], references: [id])
-  alunoId String @unique
+  alunoId String? @unique                                                   //Atualizar para incluir o id do aluno lider
   estandeId String?
   estande Estande? @relation("apresentacao")
-  alunos Aluno[] @relation("composicao")
+  alunos Aluno[] @relation("composicao")                                    //Atualizar para incluir o id dos alunos do grupo
 }
 
 model Estande {
   id String @id @default(uuid())
   grupo Grupo? @relation("apresentacao", fields: [grupoId], references: [id])
   grupoId String? @unique
-  avaliacao Avaliacao[] @relation("avaliado")
+
+  avaliacao Avaliacao[] @relation("avaliado")                               //Atualisar para incluir notas de Avaliação
   
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
@@ -53,11 +55,13 @@ model Estande {
 model Avaliacao {
   id String @id @default(uuid())
   
-  //professor Professor @relation("avaliador", fields: [professorId], references: [id])
-  //professorId String @unique
+  professor Professor? @relation("avaliador", fields: [professorId], references: [id])  //se professorId for nulo. Avaliação feita por um aluno
+  professorId String? @unique
+  aluno Aluno? @relation("avaliador", fields: [alunoId], references: [id])              //se alunoId for nulo. Avaliação feita por um professor
+  alunoId String? @unique
   
   estande Estande? @relation("avaliado", fields: [estandeId], references: [id])
-  estandeId String @unique
+  estandeId String? @unique
 
   notaIdeia Int
   notaProjeto Int
