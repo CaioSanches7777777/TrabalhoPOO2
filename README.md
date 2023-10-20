@@ -4,7 +4,7 @@
 A Universidade de Vila Velha realiza em seu campus todo ano o InovaWeek, evento de inovação e tecnologia.
 Nesse evento há muitas apresentações realizadas por alunos, e essas avaliações são avaliadas por professores.
 Os alunos formam grupos, onde há um lider, que é responsavel pelo grupo, porém a nota é igual para todos os integrante.
-Cada grupo tem seu propio estande, que é marcado por uma numeração, e cada professor recebe um numero X de estandes para avaliar,
+Cada grupo tem seu proprio estande, que é marcado por uma numeração, e cada professor recebe um numero X de estandes para avaliar,
 por exemplo se ele receber 5 estandes, ele vai saber qual é a numeração de cada estante.
 
 ## Diagrama
