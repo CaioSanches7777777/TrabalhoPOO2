@@ -1,3 +1,4 @@
+/*
 class Aluno implements Avaliador{
     id: string;
     email: string;
@@ -6,3 +7,4 @@ class Aluno implements Avaliador{
     created_at: Date;
     updated_at: Date;
 }
+*/
