@@ -103,4 +103,12 @@ VScode Icons
 
 ```npx prisma migrate dev --name init```
 
-#
+# Servidor
+npm i express
+
+npm install --save-dev @types/express
+
+npx ts-node ./src/server.ts
+
+# instalar ejs
+npm install ejs
